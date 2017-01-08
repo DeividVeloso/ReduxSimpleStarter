@@ -14,10 +14,11 @@ class App extends Component {
         //State vem do super, aqui estamos declarando um array de videos
         this.state = { videos : [] };
 
+        //ACESSANDO A API do YOUTUBE - REQUEST {key: API_KEY, term: 'surfboards'}
         //Primeiro parametro um objeto javascript, com chave da API e Termo da pesquisa
         //Segundo parametro funcao de call back que retornara o resultado do Youtube
-        YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
-            this.setState({videos});
+        YTSearch({key: API_KEY, term: 'surfboards'}, (data) => {
+            this.setState({videos : data});
         });
 
     }
