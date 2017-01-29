@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail';
 
 const API_KEY = 'AIzaSyB5AaqtXQOxHAHRrKgw2SgCDMDlzHs3V70';
 
@@ -17,7 +18,7 @@ class App extends Component {
         //ACESSANDO A API do YOUTUBE - REQUEST {key: API_KEY, term: 'surfboards'}
         //Primeiro parametro um objeto javascript, com chave da API e Termo da pesquisa
         //Segundo parametro funcao de call back que retornara o resultado do Youtube
-        YTSearch({key: API_KEY, term: 'surfboards'}, (data) => {
+        YTSearch({key: API_KEY, term: 'nandoreis'}, (data) => {
             this.setState({videos : data});
         });
 
@@ -25,10 +26,12 @@ class App extends Component {
     render(){
         //Componente Filho (children)
         //Passando propriedade de pai(APP) para filho (prop) videos
+        console.log(this.state.videos[0]);
         return ( 
                 <div>
                     <SearchBar />
-                    <VideoList videos = {this.state.videos}/>
+                    <VideoDetail video={this.state.videos[0]}/>
+                    <VideoList videos={this.state.videos}/>
                 </div>
         );
     }

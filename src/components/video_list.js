@@ -6,7 +6,7 @@ const VideoList = (props) => {
 //Guardando os items de videos na constante para poder exibir no Video List
 const videoItems = props.videos.map((video) => {
     //Add Key para lista de video
-    return <VideoListItem key= {video.etag}video = {video} />
+    return <VideoListItem key={video.etag} video = {video} />
 });
 
     //Exibindo os videos um ha um na tela   {videoItems}
