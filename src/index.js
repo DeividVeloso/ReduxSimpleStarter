@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
@@ -36,12 +37,17 @@ class App extends Component {
     }
 
     render(){
+
+      //Colocando um delay quando for fazer a pesquisa no SearchBar de 300ms
+      //assim que passar os milisegundos ele pesquisa na API
+      const videoSearch = _.debounce((term) => {this.videoSearch(term)},300);
+
         //Componente Filho (children)
         //Passando propriedade de pai(APP) para filho (prop) videos
         console.log(this.state.videos[0]);
         return (
                 <div>
-                    <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+                    <SearchBar onSearchTermChange={videoSearch}/>
                     <VideoDetail video={this.state.selectedVideo}/>
                     <VideoList
                       onVideoSelect={selectedVideo => this.setState({selectedVideo})}
