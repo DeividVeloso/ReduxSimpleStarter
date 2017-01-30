@@ -13,25 +13,39 @@ class App extends Component {
         super(props);
 
         //State vem do super, aqui estamos declarando um array de videos
-        this.state = { videos : [] };
+        this.state = {
+          videos : [],
+          selectedVideo: null
+        };
 
-        //ACESSANDO A API do YOUTUBE - REQUEST {key: API_KEY, term: 'surfboards'}
-        //Primeiro parametro um objeto javascript, com chave da API e Termo da pesquisa
-        //Segundo parametro funcao de call back que retornara o resultado do Youtube
-        YTSearch({key: API_KEY, term: 'nandoreis'}, (data) => {
-            this.setState({videos : data});
-        });
-
+        this.videoSearch('surfboards');
     }
+
+    videoSearch(term){
+      //ACESSANDO A API do YOUTUBE - REQUEST {key: API_KEY, term: 'surfboards'}
+      //Primeiro parametro um objeto javascript, com chave da API e Termo da pesquisa
+      //Segundo parametro funcao de call back que retornara o resultado do Youtube
+      YTSearch({key: API_KEY, term: term}, (data) => {
+          this.setState(
+            {
+              videos : data,
+              selectedVideo : data[0]
+            }
+          );
+      });
+    }
+
     render(){
         //Componente Filho (children)
         //Passando propriedade de pai(APP) para filho (prop) videos
         console.log(this.state.videos[0]);
-        return ( 
+        return (
                 <div>
-                    <SearchBar />
-                    <VideoDetail video={this.state.videos[0]}/>
-                    <VideoList videos={this.state.videos}/>
+                    <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+                    <VideoDetail video={this.state.selectedVideo}/>
+                    <VideoList
+                      onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                      videos={this.state.videos}/>
                 </div>
         );
     }
